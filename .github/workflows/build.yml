@@ -78,6 +78,45 @@ jobs:
         run: which pip
         shell: bash -l {0}
       
+      - name: Download input files
+        run: |
+          mkdir data
+          wget \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.1.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.2.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.3.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.4.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.5.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.6.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.7.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.8.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_1.fastq \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_2.fastq \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.fastq \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.fastq \
+            -P data \
+            --no-verbose
+          ls data
+        shell: bash -l {0}
+      
+      - name: Compress test FASTQ files
+        run: |
+          gzip \
+            data/sample_01_1.fastq \
+            data/sample_01_2.fastq \
+            data/sample_02_1.fastq \
+            data/sample_02_2.fastq
+          ls data
+        shell: bash -l {0}
+      
       - name: Run pipeline
         run: python pipeline.py make full -v 5 --local
+        shell: bash -l {0}
+
+      - name: List pipeline outputs
+        run: ls -lR results
+        shell: bash -l {0}
+
+      - name: Check pipeline outputs
+        run: bash etc/ci_checks.sh
         shell: bash -l {0}
