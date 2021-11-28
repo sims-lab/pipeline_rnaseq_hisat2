@@ -8,7 +8,8 @@ expected_files=(
 
 for file in $expected_files
 do
-    if [ ! -f $file ]; then
+    echo $file
+    if [ ! -f "$file" ]; then
         echo "File not found: $file"
         exit 1
     fi
