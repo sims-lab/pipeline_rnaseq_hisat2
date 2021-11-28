@@ -80,7 +80,7 @@ jobs:
       
       - name: Download input files
         run: |
-          mkdir test_files
+          mkdir data
           wget \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.1.ht2 \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.2.ht2 \
@@ -94,19 +94,19 @@ jobs:
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_2.fastq \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.fastq \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.fastq \
-            -P test_files \
+            -P data \
             --no-verbose
-          ls test_files
+          ls data
         shell: bash -l {0}
       
       - name: Compress test FASTQ files
         run: |
           gzip \
-            test_files/sample_01_1.fastq \
-            test_files/sample_01_2.fastq \
-            test_files/sample_02_1.fastq \
-            test_files/sample_02_2.fastq
-          ls test_files
+            data/sample_01_1.fastq \
+            data/sample_01_2.fastq \
+            data/sample_02_1.fastq \
+            data/sample_02_2.fastq
+          ls data
         shell: bash -l {0}
       
       - name: Run pipeline

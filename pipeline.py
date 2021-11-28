@@ -82,41 +82,27 @@ PARAMS = P.get_parameters(
 ############
 
 
-@transform("config.yml", regex("(.*)\.(.*)"), r"\1.counts")
-def countWords(infile, outfile):
+@follows(mkdir("fastqc"), mkdir("results"))
+@transform("data/*.fastq.gz", regex(r"(.*).fastq.gz"), r"results/fastqc/\1_fastqc.html")
+def run_fastqc(infile, outfile):
     """
-    Count the number of words in the pipeline configuration files.
+    Run FastQC on the FASTQ files.
     """
-
-    # Declare the command line statement we want to execute
     statement = """
-        awk '
-            BEGIN { printf("word\\tfreq\\n"); }
-            { for (i = 1; i <= NF; i++) freq[$i]++ }
-            END { for (word in freq) printf "%%s\\t%%d\\n", word, freq[word] }
-            '
-        < %(infile)s > %(outfile)s
-        """
+        fastqc 
+            -o fastqc
+            --nogroup
+            %(infile)s
+            > %(outfile)s.log
+            2>&1
+    """
 
-    # Execute the statement.
-    #
-    # The statement is interpolated with any options that are defined
-    # in the configuration files or variable that are declared in the calling function.
-    # For example, %(infile)s will we substituted with the contents of the variable `infile`.
     P.run(statement, job_condaenv="pipeline-env")
-
-
-@transform(countWords, suffix(".counts"), "_counts.load")
-def loadWordCounts(infile, outfile):
-    """
-    Load results of word counting into database.
-    """
-    P.load(infile, outfile, "--add-index=word")
 
 
 # ---------------------------------------------------
 # Generic pipeline tasks
-@follows(loadWordCounts)
+@follows(run_fastqc)
 def full():
     pass
 
