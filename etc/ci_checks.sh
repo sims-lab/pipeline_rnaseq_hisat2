@@ -6,7 +6,7 @@ expected_files=(
     dummy_fail
 )
 
-for file in $expected_files
+for file in "${expected_files[@]}"
 do
     echo $file
     if [ ! -f "$file" ]; then
