@@ -103,7 +103,7 @@ def run_fastqc(infile, outfile):
 
 
 @follows(mkdir("results/multiqc"))
-@merge(fastqc, "results/multiqc/fastqc.html")
+@merge(run_fastqc, "results/multiqc/fastqc.html")
 def run_multiqc_on_fastqc(infiles, outfile):
     statement = """
         multiqc 
