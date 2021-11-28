@@ -116,3 +116,7 @@ jobs:
       - name: List pipeline outputs
         run: ls -lR results
         shell: bash -l {0}
+
+      - name: Check pipeline outputs
+        run: bash etc/ci_checks.sh
+        shell: bash -l {0}
