@@ -99,6 +99,16 @@ jobs:
           ls test_files
         shell: bash -l {0}
       
+      - name: Compress test FASTQ files
+        run: |
+          gzip \
+            test_files/sample_01_1.fastq \
+            test_files/sample_01_2.fastq \
+            test_files/sample_02_1.fastq \
+            test_files/sample_02_2.fastq
+          ls test_files
+        shell: bash -l {0}
+      
       - name: Run pipeline
         run: python pipeline.py make full -v 5 --local
         shell: bash -l {0}
