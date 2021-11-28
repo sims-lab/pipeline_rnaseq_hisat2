@@ -83,7 +83,9 @@ PARAMS = P.get_parameters(
 
 
 @follows(mkdir("fastqc"), mkdir("results"))
-@transform("data/*.fastq.gz", regex(r"(.*).fastq.gz"), r"results/fastqc/\1_fastqc.html")
+@transform(
+    "data/*.fastq.gz", regex(r".*/(.*).fastq.gz"), r"results/fastqc/\1_fastqc.html"
+)
 def run_fastqc(infile, outfile):
     """
     Run FastQC on the FASTQ files.
