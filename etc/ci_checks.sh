@@ -8,9 +8,11 @@ expected_files=(
 
 for file in "${expected_files[@]}"
 do
-    echo $file
-    if [ ! -f "$file" ]; then
-        echo "File not found: $file"
+    if [ -f "$file" ]; then
+        echo "[OK] $file"
+        exit 1
+    else
+        echo "[FAIL] $file"
         exit 1
     fi
 done
