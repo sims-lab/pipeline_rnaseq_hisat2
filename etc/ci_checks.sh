@@ -10,7 +10,6 @@ for file in "${expected_files[@]}"
 do
     if [ -f "$file" ]; then
         echo "[OK] $file"
-        exit 1
     else
         echo "[FAIL] $file"
         exit 1
