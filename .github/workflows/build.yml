@@ -116,3 +116,7 @@ jobs:
       - name: List pipeline outputs
         run: ls -lR results
         shell: bash -l {0}
+
+      - name: Display log files for debug
+        run: cat results/fastqc/*log
+        shell: bash -l {0}
