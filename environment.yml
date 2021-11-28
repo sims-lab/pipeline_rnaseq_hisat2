@@ -5,6 +5,7 @@ channels:
   - defaults
 dependencies:
   - cgatcore
+  - hisat2
   - pip
   - pip:
       - -r requirements.txt
