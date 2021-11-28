@@ -90,10 +90,10 @@ jobs:
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.6.ht2 \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.7.ht2 \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.8.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_1.fasta \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_2.fasta \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.fasta \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.fasta \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_1.fastq \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_2.fastq \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.fastq \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.fastq \
             -P test_files \
             --no-verbose
           ls test_files
