@@ -102,7 +102,22 @@ def run_fastqc(infile, outfile):
     P.run(statement, job_condaenv="pipeline-env")
 
 
-@follows(run_fastqc)
+@follows(mkdir("results/multiqc"))
+@merge(fastqc, "results/multiqc/fastqc.html")
+def run_multiqc_on_fastqc(infiles, outfile):
+    statement = """
+        multiqc 
+            -n fastqc.html
+            -o results/multiqc
+            results/fastqc
+            > %(outfile)s.log
+            2>&1
+    """
+
+    P.run(statement, job_condaenv="pipeline-env")
+
+
+@follows(run_multiqc_on_fastqc)
 def full():
     pass
 
