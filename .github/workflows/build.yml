@@ -78,6 +78,21 @@ jobs:
         run: which pip
         shell: bash -l {0}
       
+      - name: Download input files
+        run: |
+          mkdir test_files
+          wget \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.1.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.2.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.3.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.4.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.5.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.6.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.7.ht2 \
+            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.8.ht2 \
+            -P test_files
+        shell: bash -l {0}
+      
       - name: Run pipeline
         run: python pipeline.py make full -v 5 --local
         shell: bash -l {0}
