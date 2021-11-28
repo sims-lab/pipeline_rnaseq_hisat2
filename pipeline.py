@@ -102,11 +102,14 @@ def run_fastqc(infile, outfile):
     P.run(statement, job_condaenv="pipeline-env")
 
 
-# ---------------------------------------------------
-# Generic pipeline tasks
 @follows(run_fastqc)
 def full():
     pass
+
+
+##################
+# Main execution #
+##################
 
 
 def main(argv=None):
