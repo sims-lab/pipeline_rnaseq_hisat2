@@ -112,3 +112,7 @@ jobs:
       - name: Run pipeline
         run: python pipeline.py make full -v 5 --local
         shell: bash -l {0}
+
+      - name: List pipeline outputs
+        run: ls -lR results
+        shell: bash -l {0}
