@@ -6,6 +6,7 @@ channels:
 dependencies:
   - cgatcore
   - fastqc
+  - multiqc
   - hisat2
   - pip
   - pip:
