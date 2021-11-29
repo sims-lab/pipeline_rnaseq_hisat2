@@ -11,6 +11,10 @@ expected_files=(
     results/multiqc/fastqc_data/multiqc_fastqc.txt
     results/multiqc/fastqc_data/multiqc_general_stats.txt
     results/multiqc/fastqc_data/multiqc_sources.txt
+    results/hisat2/sample_01.bam
+    results/hisat2/sample_02.bam
+    results/hisat2/sample_01.bam.bai
+    results/hisat2/sample_02.bam.bai
 )
 
 for file in "${expected_files[@]}"

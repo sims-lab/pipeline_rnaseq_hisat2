@@ -1,1 +1,6 @@
 # Pipeline options in YAML format
+
+hisat2:
+    threads: 2
+    genome: data/hisat2_chr22
+    options: --rna-strandness RF

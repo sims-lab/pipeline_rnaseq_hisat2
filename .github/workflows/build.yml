@@ -81,18 +81,18 @@ jobs:
       - name: Download input files
         run: |
           wget \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.1.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.2.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.3.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.4.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.5.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.6.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.7.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.8.ht2 \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_1.fastq \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_2.fastq \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.fastq \
-            https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.1.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.2.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.3.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.4.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.5.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.6.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.7.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.8.ht2 \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_1.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_01_2.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.fastq \
             -P data \
             --no-verbose
           ls data
@@ -107,7 +107,14 @@ jobs:
             data/sample_02_2.fastq
           ls data
         shell: bash -l {0}
+
+      - name: Show pipeline
+        run: python pipeline.py show full -v 5 --local
+        shell: bash -l {0}
       
+      # Resources available for GitHub-hosted runners:
+      # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+
       - name: Run pipeline
         run: python pipeline.py make full -v 5 --local
         shell: bash -l {0}
