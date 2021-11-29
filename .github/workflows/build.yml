@@ -107,7 +107,14 @@ jobs:
             data/sample_02_2.fastq
           ls data
         shell: bash -l {0}
+
+      - name: Show pipeline
+        run: python pipeline.py show full -v 5 --local
+        shell: bash -l {0}
       
+      # Resources available for GitHub-hosted runners:
+      # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+
       - name: Run pipeline
         run: python pipeline.py make full -v 5 --local
         shell: bash -l {0}
