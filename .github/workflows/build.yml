@@ -80,7 +80,6 @@ jobs:
       
       - name: Download input files
         run: |
-          mkdir data
           wget \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.1.ht2 \
             https://github.com/kevinrue/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.2.ht2 \

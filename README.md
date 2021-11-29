@@ -11,7 +11,7 @@ Pipeline for processing paired-end RNA-sequencing using [cgatcore][link-cgatcore
 - [ ] Create a new repository from this one, using the `Use as template` button on [GitHub](https://github.com/sims-lab/pipeline_rnaseq_hisat2).
   + That way, your new repository starts its own commit history, where you can record your own changes!
   + Only fork this repository if you wish to contribute updates to the template pipeline itself.
-- [ ] Clone the new repository to the computer where the pipeline will be run.
+- [ ] Clone the new repository to the computer where you wish to run the pipeline.
 - [ ] Create a Conda environment named `pipeline-env` using the file `environment.yml`. 
 - [ ] Create symbolic links to the input FASTQ files, in the subdirectory `data/`.
 - [ ] Edit the configuration of the pipeline as needed, in the file `config.yml`.
