@@ -8,6 +8,7 @@ dependencies:
   - fastqc
   - multiqc
   - hisat2
+  - samtools
   - pip
   - pip:
       - -r requirements.txt
