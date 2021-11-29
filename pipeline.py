@@ -100,7 +100,7 @@ def fastqc_on_fastq(infile, outfile):
             2>&1
     """
 
-    P.run(statement, job_condaenv="pipeline-env")
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
 @follows(mkdir("results/multiqc"))
@@ -119,7 +119,7 @@ def multiqc_on_fastqc(infiles, outfile):
             2>&1
     """
 
-    P.run(statement, job_condaenv="pipeline-env")
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
 @follows(mkdir("results/hisat2"))
@@ -147,7 +147,11 @@ def hisat2_on_fastq(infiles, outfile):
             %(outfile)s
     """
 
-    P.run(statement, job_condaenv="pipeline-env", job_threads=PARAMS["hisat2_threads"])
+    P.run(
+        statement,
+        job_condaenv="pipeline_rnaseq_hisat2",
+        job_threads=PARAMS["hisat2_threads"],
+    )
 
 
 @follows(multiqc_on_fastqc, hisat2_on_fastq)
