@@ -8,7 +8,7 @@ Pipeline for processing paired-end RNA-sequencing using [cgatcore][link-cgatcore
 
 ## Usage
 
-- [ ] Create a new repository from pipeline_rnaseq_hisat2, using the `Use as template` button on [GitHub](https://github.com/sims-lab/pipeline_rnaseq_hisat2).
+- [ ] Create a new repository from this one, using the `Use as template` button on [GitHub](https://github.com/sims-lab/pipeline_rnaseq_hisat2).
   + That way, your new repository starts its own commit history, where you can record your own changes!
   + Only fork this repository if you wish to contribute updates to the template pipeline itself.
 - [ ] Clone the new repository to the computer where the pipeline will be run.
