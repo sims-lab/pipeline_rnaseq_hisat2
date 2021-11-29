@@ -1,12 +1,12 @@
 expected_files=(
-    results/qc/fastqc/sample_01_1.html
-    results/qc/fastqc/sample_01_2.html
-    results/qc/fastqc/sample_01_1.html
-    results/qc/fastqc/sample_01_2.html
-    results/qc/fastqc/sample_01_1.zip
-    results/qc/fastqc/sample_01_2.zip
-    results/qc/fastqc/sample_02_1.zip
-    results/qc/fastqc/sample_02_2.zip
+    results/qc/fastqc/sample_01_1_fastqc.html
+    results/qc/fastqc/sample_01_2_fastqc.html
+    results/qc/fastqc/sample_01_1_fastqc.html
+    results/qc/fastqc/sample_01_2_fastqc.html
+    results/qc/fastqc/sample_01_1_fastqc.zip
+    results/qc/fastqc/sample_01_2_fastqc.zip
+    results/qc/fastqc/sample_02_1_fastqc.zip
+    results/qc/fastqc/sample_02_2_fastqc.zip
     results/qc/multiqc/fastqc.html
     results/qc/multiqc/fastqc_data/multiqc_fastqc.txt
     results/qc/multiqc/fastqc_data/multiqc_general_stats.txt

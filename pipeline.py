@@ -83,7 +83,9 @@ PARAMS = P.get_parameters(
 
 
 @follows(mkdir("results/qc/fastqc"))
-@transform("data/*.fastq.gz", regex(r".*/(.*).fastq.gz"), r"results/qc/fastqc/\1.html")
+@transform(
+    "data/*.fastq.gz", regex(r".*/(.*).fastq.gz"), r"results/qc/fastqc/\1_fastqc.html"
+)
 def fastqc_on_fastq(infile, outfile):
     """
     Run FastQC on the FASTQ files.
@@ -172,7 +174,7 @@ def idxstats_on_bam(infile, outfile):
     P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
-@follows(fastqc_on_fastq, idxstats_on_bam)
+@follows(multiqc_on_fastqc, idxstats_on_bam)
 def full():
     pass
 
