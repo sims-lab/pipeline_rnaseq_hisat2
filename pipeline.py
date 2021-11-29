@@ -91,7 +91,7 @@ def fastqc_on_fastq(infile, outfile):
 
     statement = """
         fastqc 
-            -o results/fastqc
+            -o results/qc/fastqc
             --nogroup
             %(infile)s
             > %(outfile)s.log
@@ -111,7 +111,7 @@ def multiqc_on_fastqc(infiles, outfile):
     statement = """
         multiqc 
             -n fastqc.html
-            -o results/multiqc
+            -o results/reports/multiqc
             results/qc/fastqc
             > %(outfile)s.log
             2>&1
