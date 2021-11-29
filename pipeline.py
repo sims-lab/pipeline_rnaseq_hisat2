@@ -200,7 +200,7 @@ def flagstat_on_bam(infile, outfile):
     regex(r"results/hisat2/(.*).bam"),
     r"results/qc/picard/CollectAlignmentSummaryMetrics/\1",
 )
-def picard_metrics_on_bam(infile, outfile):
+def picard_alignment_metrics_on_bam(infile, outfile):
     """
     Run `picard CollectAlignmentSummaryMetrics` on the BAM files produced by HISAT2.
     """
@@ -216,7 +216,36 @@ def picard_metrics_on_bam(infile, outfile):
     P.run(statement)
 
 
-@follows(multiqc_on_fastqc, idxstats_on_bam, flagstat_on_bam, picard_metrics_on_bam)
+@follows(mkdir("results/qc/picard/CollectInsertSizeMetrics"))
+@transform(
+    hisat2_on_fastq,
+    regex(r"results/hisat2/(.*).bam"),
+    r"results/qc/picard/CollectInsertSizeMetrics/\1",
+)
+def picard_insert_size_on_bam(infile, outfile):
+    """
+    Run `picard CollectAlignmentSummaryMetrics` on the BAM files produced by HISAT2.
+    """
+
+    statement = """
+        picard CollectInsertSizeMetrics
+        -I %(infile)s
+        -O %(outfile)s
+        -R %(picard_genome)s
+        -H %(outfile)s.pdf
+        2> %(outfile)s.log
+    """
+
+    P.run(statement)
+
+
+@follows(
+    multiqc_on_fastqc,
+    idxstats_on_bam,
+    flagstat_on_bam,
+    picard_alignment_metrics_on_bam,
+    picard_insert_size_on_bam,
+)
 def full():
     pass
 
