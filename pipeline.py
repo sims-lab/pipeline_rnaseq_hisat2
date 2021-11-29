@@ -123,7 +123,7 @@ def multiqc_on_fastqc(infiles, outfile):
 
 
 @follows(mkdir("results/hisat2"))
-@collate("*.fastq.gz", regex(r"(.*)_[12].fastq.gz"), r"results/hisat2/\1.bam")
+@collate("data/*.fastq.gz", regex(r".*/(.*)_[12].fastq.gz"), r"results/hisat2/\1.bam")
 def hisat2_on_fastq(infiles, outfile):
     """
     Run HISAT2 on the paired-end FASTQ files.
