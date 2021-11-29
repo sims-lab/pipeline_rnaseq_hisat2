@@ -172,7 +172,7 @@ def idxstats_on_bam(infile, outfile):
     P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
-@follows(multiqc_on_fastqc, idxstats_on_bam)
+@follows(fastqc_on_fastq, idxstats_on_bam)
 def full():
     pass
 
