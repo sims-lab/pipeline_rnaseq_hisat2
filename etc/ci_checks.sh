@@ -24,6 +24,9 @@ expected_files=(
     results/qc/picard/CollectInsertSizeMetrics/sample_01
     results/qc/picard/CollectInsertSizeMetrics/sample_02
     results/reports/multiqc/bam.html
+    results/reports/multiqc/bam_data/multiqc_fastqc.txt
+    results/reports/multiqc/bam_data/multiqc_general_stats.txt
+    results/reports/multiqc/bam_data/multiqc_sources.txt
 )
 
 for file in "${expected_files[@]}"
