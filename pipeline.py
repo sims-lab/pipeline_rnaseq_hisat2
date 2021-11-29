@@ -174,7 +174,27 @@ def idxstats_on_bam(infile, outfile):
     P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
-@follows(multiqc_on_fastqc, idxstats_on_bam)
+@follows(mkdir("results/qc/samtools/flagstat"))
+@transform(
+    hisat2_on_fastq,
+    regex(r"results/hisat2/(.*).bam"),
+    r"results/qc/samtools/flagstat/\1",
+)
+def flagstat_on_bam(infile, outfile):
+    """
+    Run `samtools flagstat` on the BAM files produced by HISAT2.
+    """
+
+    statement = """
+        samtools flagstat
+        %(infile)s
+        > %(outfile)s
+    """
+
+    P.run(statement)
+
+
+@follows(multiqc_on_fastqc, idxstats_on_bam, flagstat_on_bam)
 def full():
     pass
 
