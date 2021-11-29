@@ -17,8 +17,8 @@ expected_files=(
     results/hisat2/sample_02.bam.bai
     results/qc/samtools/idxstats/sample_01
     results/qc/samtools/idxstats/sample_02
-    results/qc/samtools/flagstats/sample_01
-    results/qc/samtools/flagstats/sample_02
+    results/qc/samtools/flagstat/sample_01
+    results/qc/samtools/flagstat/sample_02
 )
 
 for file in "${expected_files[@]}"
