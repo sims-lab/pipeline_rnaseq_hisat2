@@ -7,10 +7,10 @@ expected_files=(
     results/qc/fastqc/sample_01_2_fastqc.zip
     results/qc/fastqc/sample_02_1_fastqc.zip
     results/qc/fastqc/sample_02_2_fastqc.zip
-    results/qc/multiqc/fastqc.html
-    results/qc/multiqc/fastqc_data/multiqc_fastqc.txt
-    results/qc/multiqc/fastqc_data/multiqc_general_stats.txt
-    results/qc/multiqc/fastqc_data/multiqc_sources.txt
+    results/reports/multiqc/fastqc.html
+    results/reports/multiqc/fastqc_data/multiqc_fastqc.txt
+    results/reports/multiqc/fastqc_data/multiqc_general_stats.txt
+    results/reports/multiqc/fastqc_data/multiqc_sources.txt
     results/hisat2/sample_01.bam
     results/hisat2/sample_02.bam
     results/hisat2/sample_01.bam.bai
