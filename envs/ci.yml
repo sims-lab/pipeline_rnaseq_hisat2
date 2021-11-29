@@ -11,5 +11,5 @@ dependencies:
   - samtools
   - pip
   - pip:
-      drmaa
-      flake8
+      - drmaa
+      - flake8
