@@ -33,7 +33,7 @@ jobs:
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v2.1.1
         with:
-          activate-environment: pipeline_template
+          activate-environment: pipeline_rnaseq_hisat2
           environment-file: envs/ci.yml
           python-version: ${{ matrix.python-version }}
           mamba-version: "*"
