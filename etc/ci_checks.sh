@@ -19,6 +19,8 @@ expected_files=(
     results/qc/samtools/idxstats/sample_02
     results/qc/samtools/flagstat/sample_01
     results/qc/samtools/flagstat/sample_02
+    results/qc/picard/CollectAlignmentSummaryMetrics/sample_01
+    results/qc/picard/CollectAlignmentSummaryMetrics/sample_02
 )
 
 for file in "${expected_files[@]}"
