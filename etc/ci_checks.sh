@@ -1,20 +1,22 @@
 expected_files=(
-    results/fastqc/sample_01_1_fastqc.html
-    results/fastqc/sample_01_2_fastqc.html
-    results/fastqc/sample_01_1_fastqc.html
-    results/fastqc/sample_01_2_fastqc.html
-    results/fastqc/sample_01_1_fastqc.zip
-    results/fastqc/sample_01_2_fastqc.zip
-    results/fastqc/sample_02_1_fastqc.zip
-    results/fastqc/sample_02_2_fastqc.zip
-    results/multiqc/fastqc.html
-    results/multiqc/fastqc_data/multiqc_fastqc.txt
-    results/multiqc/fastqc_data/multiqc_general_stats.txt
-    results/multiqc/fastqc_data/multiqc_sources.txt
+    results/qc/fastqc/sample_01_1.html
+    results/qc/fastqc/sample_01_2.html
+    results/qc/fastqc/sample_01_1.html
+    results/qc/fastqc/sample_01_2.html
+    results/qc/fastqc/sample_01_1.zip
+    results/qc/fastqc/sample_01_2.zip
+    results/qc/fastqc/sample_02_1.zip
+    results/qc/fastqc/sample_02_2.zip
+    results/qc/multiqc/fastqc.html
+    results/qc/multiqc/fastqc_data/multiqc_fastqc.txt
+    results/qc/multiqc/fastqc_data/multiqc_general_stats.txt
+    results/qc/multiqc/fastqc_data/multiqc_sources.txt
     results/hisat2/sample_01.bam
     results/hisat2/sample_02.bam
     results/hisat2/sample_01.bam.bai
     results/hisat2/sample_02.bam.bai
+    results/qc/samtools/idxstats/sample_01
+    results/qc/samtools/idxstats/sample_02
 )
 
 for file in "${expected_files[@]}"
