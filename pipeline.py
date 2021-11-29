@@ -105,7 +105,7 @@ def fastqc_on_fastq(infile, outfile):
 
 @follows(mkdir("results/reports/multiqc"))
 @merge(fastqc_on_fastq, "results/reports/multiqc/fastq.html")
-def multiqc_on_fastqc(infiles, outfile):
+def multiqc_fastq(infiles, outfile):
     """
     Run MultiQC on the output of FastQC.
     """
@@ -269,7 +269,7 @@ def multiqc_bam(infiles, outfile):
     P.run(statement)
 
 
-@follows(multiqc_on_fastqc)
+@follows(multiqc_fastq, multiqc_bam)
 def full():
     pass
 
