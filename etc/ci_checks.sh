@@ -30,7 +30,6 @@ expected_files=(
     results/reports/multiqc/bam_data/multiqc_picard_AlignmentSummaryMetrics.txt
     results/reports/multiqc/bam_data/multiqc_picard_insertSize.txt
     results/reports/multiqc/bam_data/multiqc_samtools_flagstat.txt
-    results/reports/multiqc/bam_data/
 )
 
 for file in "${expected_files[@]}"
