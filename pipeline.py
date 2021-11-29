@@ -82,9 +82,9 @@ PARAMS = P.get_parameters(
 ############
 
 
-@follows(mkdir("fastqc"), mkdir("results"))
+@follows(mkdir("results/qc/fastqc"))
 @transform(
-    "data/*.fastq.gz", regex(r".*/(.*).fastq.gz"), r"results/fastqc/\1_fastqc.html"
+    "data/*.fastq.gz", regex(r".*/(.*).fastq.gz"), r"results/qc/fastqc/\1_fastqc.html"
 )
 def fastqc_on_fastq(infile, outfile):
     """
@@ -93,7 +93,7 @@ def fastqc_on_fastq(infile, outfile):
 
     statement = """
         fastqc 
-            -o results/fastqc
+            -o results/qc/fastqc
             --nogroup
             %(infile)s
             > %(outfile)s.log
@@ -103,8 +103,8 @@ def fastqc_on_fastq(infile, outfile):
     P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
-@follows(mkdir("results/multiqc"))
-@merge(fastqc_on_fastq, "results/multiqc/fastqc.html")
+@follows(mkdir("results/reports/multiqc"))
+@merge(fastqc_on_fastq, "results/reports/multiqc/fastqc.html")
 def multiqc_on_fastqc(infiles, outfile):
     """
     Run MultiQC on the output of FastQC.
@@ -113,8 +113,8 @@ def multiqc_on_fastqc(infiles, outfile):
     statement = """
         multiqc 
             -n fastqc.html
-            -o results/multiqc
-            results/fastqc
+            -o results/reports/multiqc
+            results/qc/fastqc
             > %(outfile)s.log
             2>&1
     """
@@ -154,7 +154,27 @@ def hisat2_on_fastq(infiles, outfile):
     )
 
 
-@follows(multiqc_on_fastqc, hisat2_on_fastq)
+@follows(mkdir("results/qc/samtools/idxstats"))
+@transform(
+    hisat2_on_fastq,
+    regex(r"results/hisat2/(.*).bam"),
+    r"results/qc/samtools/idxstats/\1",
+)
+def idxstats_on_bam(infile, outfile):
+    """
+    Run `samtools idxstats` on the BAM files produced by HISAT2.
+    """
+
+    statement = """
+        samtools idxstats
+        %(infile)s
+        > %(outfile)s
+    """
+
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
+
+
+@follows(multiqc_on_fastqc, idxstats_on_bam)
 def full():
     pass
 
