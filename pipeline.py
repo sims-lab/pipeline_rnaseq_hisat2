@@ -90,6 +90,7 @@ def fastqc_on_fastq(infile, outfile):
     """
     Run FastQC on the FASTQ files.
     """
+
     statement = """
         fastqc 
             -o results/fastqc
@@ -105,6 +106,10 @@ def fastqc_on_fastq(infile, outfile):
 @follows(mkdir("results/multiqc"))
 @merge(fastqc_on_fastq, "results/multiqc/fastqc.html")
 def multiqc_on_fastqc(infiles, outfile):
+    """
+    Run MultiQC on the output of FastQC.
+    """
+
     statement = """
         multiqc 
             -n fastqc.html
@@ -117,7 +122,35 @@ def multiqc_on_fastqc(infiles, outfile):
     P.run(statement, job_condaenv="pipeline-env")
 
 
-@follows(multiqc_on_fastqc)
+@follows(mkdir("results/hisat2"))
+@collate("*.fastq.gz", regex(r"(.*)_[12].fastq.gz"), r"results/hisat2/\1.bam")
+def hisat2_on_fastq(infiles, outfile):
+    """
+    Run HISAT2 on the paired-end FASTQ files.
+    """
+
+    infile1, infile2 = infiles
+
+    statement = """
+        hisat2
+            --threads %(hisat2_threads)s
+            -x %(hisat2_genome)s
+            -1 %(infile1)s
+            -2 %(infile2)s
+            %(hisat2_options)s
+            --summary-file %(outfile)s.log
+        | samtools sort
+            -@ %(hisat2_threads)s
+            -o %(outfile)s
+            -
+        && samtools index
+            %(outfile)s
+    """
+
+    P.run(statement, job_condaenv="pipeline-env", job_threads=PARAMS["hisat2_threads"])
+
+
+@follows(multiqc_on_fastqc, hisat2_on_fastq)
 def full():
     pass
 
