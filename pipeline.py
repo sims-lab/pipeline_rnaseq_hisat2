@@ -104,7 +104,7 @@ def fastqc_on_fastq(infile, outfile):
 
 
 @follows(mkdir("results/reports/multiqc"))
-@merge(fastqc_on_fastq, "results/reports/multiqc/fastqc.html")
+@merge(fastqc_on_fastq, "results/reports/multiqc/fastq.html")
 def multiqc_on_fastqc(infiles, outfile):
     """
     Run MultiQC on the output of FastQC.
@@ -112,7 +112,7 @@ def multiqc_on_fastqc(infiles, outfile):
 
     statement = """
         multiqc 
-            -n fastqc.html
+            -n fastq.html
             -o results/reports/multiqc
             results/qc/fastqc
             > %(outfile)s.log
@@ -224,7 +224,7 @@ def picard_alignment_metrics_on_bam(infile, outfile):
 )
 def picard_insert_size_on_bam(infile, outfile):
     """
-    Run `picard CollectAlignmentSummaryMetrics` on the BAM files produced by HISAT2.
+    Run `picard CollectInsertSizeMetrics` on the BAM files produced by HISAT2.
     """
 
     statement = """
@@ -239,13 +239,37 @@ def picard_insert_size_on_bam(infile, outfile):
     P.run(statement)
 
 
-@follows(
-    multiqc_on_fastqc,
-    idxstats_on_bam,
-    flagstat_on_bam,
-    picard_alignment_metrics_on_bam,
-    picard_insert_size_on_bam,
+@merge(
+    [
+        idxstats_on_bam,
+        flagstat_on_bam,
+        picard_alignment_metrics_on_bam,
+        picard_insert_size_on_bam,
+    ],
+    "results/reports/multiqc/bam.html",
 )
+def multiqc_bam(infiles, outfile):
+    """
+    Run MultiQC on the output of FastQC.
+    """
+
+    statement = """
+        multiqc
+            -n bam.html
+            -o results/reports/multiqc
+            results/hisat2
+            results/qc/samtools/idxstats
+            results/qc/samtools/flagstat
+            results/qc/picard/CollectAlignmentSummaryMetrics
+            results/qc/picard/CollectInsertSizeMetrics
+            > %(outfile)s.log
+            2>&1
+    """
+
+    P.run(statement)
+
+
+@follows(multiqc_on_fastqc)
 def full():
     pass
 
