@@ -86,7 +86,7 @@ PARAMS = P.get_parameters(
 @transform(
     "data/*.fastq.gz", regex(r".*/(.*).fastq.gz"), r"results/fastqc/\1_fastqc.html"
 )
-def run_fastqc(infile, outfile):
+def fastqc_on_fastq(infile, outfile):
     """
     Run FastQC on the FASTQ files.
     """
@@ -103,8 +103,8 @@ def run_fastqc(infile, outfile):
 
 
 @follows(mkdir("results/multiqc"))
-@merge(run_fastqc, "results/multiqc/fastqc.html")
-def run_multiqc_on_fastqc(infiles, outfile):
+@merge(fastqc_on_fastq, "results/multiqc/fastqc.html")
+def multiqc_on_fastqc(infiles, outfile):
     statement = """
         multiqc 
             -n fastqc.html
@@ -117,7 +117,7 @@ def run_multiqc_on_fastqc(infiles, outfile):
     P.run(statement, job_condaenv="pipeline-env")
 
 
-@follows(run_multiqc_on_fastqc)
+@follows(multiqc_on_fastqc)
 def full():
     pass
 
