@@ -9,6 +9,7 @@ dependencies:
   - multiqc
   - hisat2
   - samtools
+  - picard
   - pip
   - pip:
       - drmaa

@@ -4,3 +4,6 @@ hisat2:
     threads: 2
     genome: data/hisat2_chr22
     options: --rna-strandness RF
+
+picard:
+    genome: data/Homo_sapiens.GRCh38.dna.chromosome.22.fa

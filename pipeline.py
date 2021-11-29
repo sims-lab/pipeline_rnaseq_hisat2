@@ -194,6 +194,28 @@ def flagstat_on_bam(infile, outfile):
     P.run(statement)
 
 
+@follows(mkdir("results/qc/picard/CollectAlignmentSummaryMetrics"))
+@transform(
+    hisat2_on_fastq,
+    regex(r"results/hisat2/(.*).bam"),
+    r"results/qc/picard/CollectAlignmentSummaryMetrics/\1",
+)
+def picard_metrics(infile, outfile):
+    """
+    Run `picard CollectAlignmentSummaryMetrics` on the BAM files produced by HISAT2.
+    """
+
+    statement = """
+        picard CollectAlignmentSummaryMetrics
+            -I %(infile)s
+            -O %(outfile)s
+            -R %(picard_genome)s
+            2> %(outfile)s.log
+        """
+
+    P.run(statement)
+
+
 @follows(multiqc_on_fastqc, idxstats_on_bam, flagstat_on_bam)
 def full():
     pass
