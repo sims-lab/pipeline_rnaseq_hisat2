@@ -154,6 +154,23 @@ def hisat2_on_fastq(infiles, outfile):
     )
 
 
+@transform(
+    hisat2_on_fastq, regex(r"results/hisat2/(.*).bam"), r"results/samtools/\1.idxstats"
+)
+def idxstats_on_bam(infile, outfile):
+    """
+    Run `samtools idxstats` on the BAM files produced by HISAT2.
+    """
+
+    statement = """
+        samtools idxstats
+        %(infile)s
+        > %(outfile)s
+    """
+
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
+
+
 @follows(multiqc_on_fastqc, hisat2_on_fastq)
 def full():
     pass
