@@ -7,3 +7,8 @@ hisat2:
 
 picard:
     genome: data/Homo_sapiens.GRCh38.dna.chromosome.22.fa
+
+feature_counts:
+    gtf: data/Homo_sapiens.GRCh38.104.chr.gtf.gz
+    options: -p -s 2
+    threads: 2

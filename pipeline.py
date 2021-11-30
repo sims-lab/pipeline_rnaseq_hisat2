@@ -88,7 +88,7 @@ PARAMS = P.get_parameters(
 )
 def fastqc_on_fastq(infile, outfile):
     """
-    Run FastQC on the FASTQ files.
+    Run `fastqc` on the FASTQ files.
     """
 
     statement = """
@@ -107,7 +107,7 @@ def fastqc_on_fastq(infile, outfile):
 @merge(fastqc_on_fastq, "results/reports/multiqc/fastq.html")
 def multiqc_fastq(infiles, outfile):
     """
-    Run MultiQC on the output of FastQC.
+    Run `multiqc` on the files of quality metrics computed for the FASTQ files.
     """
 
     statement = """
@@ -126,7 +126,7 @@ def multiqc_fastq(infiles, outfile):
 @collate("data/*.fastq.gz", regex(r".*/(.*)_[12].fastq.gz"), r"results/hisat2/\1.bam")
 def hisat2_on_fastq(infiles, outfile):
     """
-    Run HISAT2 on the paired-end FASTQ files.
+    Run `hisat2` on the paired-end FASTQ files.
     """
 
     infile1, infile2 = infiles
@@ -191,7 +191,7 @@ def flagstat_on_bam(infile, outfile):
         > %(outfile)s
     """
 
-    P.run(statement)
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
 @follows(mkdir("results/qc/picard/CollectAlignmentSummaryMetrics"))
@@ -213,7 +213,7 @@ def picard_alignment_metrics_on_bam(infile, outfile):
             2> %(outfile)s.log
         """
 
-    P.run(statement)
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
 @follows(mkdir("results/qc/picard/CollectInsertSizeMetrics"))
@@ -236,7 +236,7 @@ def picard_insert_size_on_bam(infile, outfile):
         2> %(outfile)s.log
     """
 
-    P.run(statement)
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
 @merge(
@@ -250,7 +250,7 @@ def picard_insert_size_on_bam(infile, outfile):
 )
 def multiqc_bam(infiles, outfile):
     """
-    Run MultiQC on the output of FastQC.
+    Run MultiQC on the files of quality metrics computed for the BAM files.
     """
 
     statement = """
@@ -266,10 +266,37 @@ def multiqc_bam(infiles, outfile):
             2>&1
     """
 
-    P.run(statement)
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
-@follows(multiqc_fastq, multiqc_bam)
+@follows(mkdir("results/featureCounts"))
+@merge(hisat2_on_fastq, "results/featureCounts/counts")
+def featurecounts_on_bam(infiles, outfile):
+    """
+    Run `featureCounts`
+    """
+
+    infile_list = " ".join(infiles)
+
+    statement = """
+        featureCounts
+            -a %(feature_counts_gtf)s
+            -o %(outfile)s
+            -T %(feature_counts_threads)s
+            %(feature_counts_options)s
+            %(infile_list)s
+            > %(outfile)s.log
+            2>&1
+        """
+
+    P.run(
+        statement,
+        job_condaenv="pipeline_rnaseq_hisat2",
+        job_threads=PARAMS["feature_counts_threads"],
+    )
+
+
+@follows(multiqc_fastq, multiqc_bam, featurecounts_on_bam)
 def full():
     pass
 
@@ -277,13 +304,6 @@ def full():
 ##################
 # Main execution #
 ##################
-
-
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
-    P.main(argv)
-
 
 if __name__ == "__main__":
     sys.exit(P.main(sys.argv))
