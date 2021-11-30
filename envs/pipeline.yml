@@ -10,6 +10,7 @@ dependencies:
   - hisat2
   - samtools
   - picard
+  - subread
   - pip
   - pip:
       - drmaa
