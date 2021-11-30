@@ -64,7 +64,7 @@ jobs:
         run: |
           wget \
             http://ftp.ensembl.org/pub/release-104/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz \
-            http://ftp.ensembl.org/pub/release-104/gtf/homo_sapiens/Homo_sapiens.GRCh38.104.chr.gtf.gz \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/chr22.genes2.gtf \
             https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.1.ht2 \
             https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.2.ht2 \
             https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.3.ht2 \
@@ -82,17 +82,18 @@ jobs:
           ls data
         shell: bash -l {0}
       
-      - name: Compress test FASTQ files
+      - name: Compress some input files
         run: |
           gzip \
             data/sample_01_1.fastq \
             data/sample_01_2.fastq \
             data/sample_02_1.fastq \
-            data/sample_02_2.fastq
+            data/sample_02_2.fastq \
+            data/chr22.genes2.gtf
           ls data
         shell: bash -l {0}
       
-      - name: Decompress genome FASTA file
+      - name: Decompress some input files
         run: |
           gzip -d \
             data/Homo_sapiens.GRCh38.dna.chromosome.22.fa.gz
