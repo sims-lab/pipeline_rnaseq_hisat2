@@ -122,6 +122,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: results
+          name: results-${{ matrix.python-version }}
           path: |
             results
