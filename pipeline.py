@@ -270,7 +270,7 @@ def multiqc_bam(infiles, outfile):
 
 
 @follows(mkdir("results/featureCounts"))
-@merge(hisat2_on_fastq, "results/featureCounts/output.txt")
+@merge(hisat2_on_fastq, "results/featureCounts/counts")
 def featurecounts_on_bam(infiles, outfile):
     """
     Run `featureCounts`
@@ -296,7 +296,7 @@ def featurecounts_on_bam(infiles, outfile):
     )
 
 
-@follows(multiqc_fastq, multiqc_bam)
+@follows(multiqc_fastq, multiqc_bam, featurecounts_on_bam)
 def full():
     pass
 
