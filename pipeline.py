@@ -239,36 +239,6 @@ def picard_insert_size_on_bam(infile, outfile):
     P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
-@merge(
-    [
-        idxstats_on_bam,
-        flagstat_on_bam,
-        picard_alignment_metrics_on_bam,
-        picard_insert_size_on_bam,
-    ],
-    "results/reports/multiqc/bam.html",
-)
-def multiqc_bam(infiles, outfile):
-    """
-    Run MultiQC on the files of quality metrics computed for the BAM files.
-    """
-
-    statement = """
-        multiqc
-            -n bam.html
-            -o results/reports/multiqc
-            results/hisat2
-            results/qc/samtools/idxstats
-            results/qc/samtools/flagstat
-            results/qc/picard/CollectAlignmentSummaryMetrics
-            results/qc/picard/CollectInsertSizeMetrics
-            > %(outfile)s.log
-            2>&1
-    """
-
-    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
-
-
 @follows(mkdir("results/featureCounts"))
 @merge(hisat2_on_fastq, "results/featureCounts/counts")
 def featurecounts_on_bam(infiles, outfile):
@@ -294,6 +264,38 @@ def featurecounts_on_bam(infiles, outfile):
         job_condaenv="pipeline_rnaseq_hisat2",
         job_threads=PARAMS["feature_counts_threads"],
     )
+
+
+@merge(
+    [
+        idxstats_on_bam,
+        flagstat_on_bam,
+        picard_alignment_metrics_on_bam,
+        picard_insert_size_on_bam,
+        featurecounts_on_bam,
+    ],
+    "results/reports/multiqc/bam.html",
+)
+def multiqc_bam(infiles, outfile):
+    """
+    Run MultiQC on the files of quality metrics computed for the BAM files.
+    """
+
+    statement = """
+        multiqc
+            -n bam.html
+            -o results/reports/multiqc
+            results/hisat2
+            results/qc/samtools/idxstats
+            results/qc/samtools/flagstat
+            results/qc/picard/CollectAlignmentSummaryMetrics
+            results/qc/picard/CollectInsertSizeMetrics
+            results/featureCounts
+            > %(outfile)s.log
+            2>&1
+    """
+
+    P.run(statement, job_condaenv="pipeline_rnaseq_hisat2")
 
 
 @follows(multiqc_fastq, multiqc_bam, featurecounts_on_bam)
