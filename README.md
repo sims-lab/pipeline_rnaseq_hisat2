@@ -4,8 +4,6 @@
 
 Pipeline for processing paired-end RNA-sequencing using [cgatcore][link-cgatcore] and [HISAT2](http://www.ccb.jhu.edu/software/hisat/index.shtml).
 
-[link-cgatcore]: https://github.com/cgat-developers/cgat-core
-
 ## Usage
 
 1. Create a new repository from this one, using the `Use as template` button on [GitHub](https://github.com/sims-lab/pipeline_rnaseq_hisat2).
@@ -24,3 +22,5 @@ Pipeline for processing paired-end RNA-sequencing using [cgatcore][link-cgatcore
 6. Run the pipeline!
     + On a High-Performance Computing (HPC) cluster, `python pipeline.py make full -v 5`, to use the Distributed Resource Management Application API (DRMAA).
     + On a local machine `python pipeline.py make full -v 5 --local`.
+
+[link-cgatcore]: https://github.com/cgat-developers/cgat-core
