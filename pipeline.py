@@ -129,7 +129,12 @@ def hisat2_on_fastq(infiles, outfile):
 
     infile1, infile2 = infiles
 
-    statement = """
+    hisat2_threads = PARAMS["hisat2"]["threads"]
+    hisat2_genome = PARAMS["hisat2"]["genome"]
+    hisat2_options = PARAMS["hisat2"]["options"]
+
+    statement = (
+        """
         hisat2
             --threads %(hisat2_threads)s
             -x %(hisat2_genome)s
@@ -144,6 +149,8 @@ def hisat2_on_fastq(infiles, outfile):
         && samtools index
             %(outfile)s
     """
+        % locals()
+    )
 
     P.run(
         statement,
