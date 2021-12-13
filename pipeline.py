@@ -70,9 +70,11 @@ from cgatcore import pipeline as P
 #################
 # Configuration #
 #################
-print("%s/config/pipeline.yml" % os.path.dirname(__file__))
+print("%s/config/pipeline.yml" % os.path.dirname(os.path.realpath(__file__)))
 # Load parameters from config file, located in `./config/pipeline.yml`.
-PARAMS = P.get_parameters("%s/config/pipeline.yml" % os.path.dirname(__file__))
+PARAMS = P.get_parameters(
+    "%s/config/pipeline.yml" % os.path.dirname(os.path.realpath(__file__))
+)
 print(PARAMS)
 ############
 # Workflow #
