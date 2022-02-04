@@ -66,7 +66,7 @@ import sys
 import os
 import cgatcore.experiment as E
 from cgatcore import pipeline as P
-from imports.config import get_number_of_samples
+from imports.config import get_sample_identifiers
 
 #################
 # Configuration #
@@ -89,14 +89,14 @@ PARAMS = P.get_parameters(
     "config/files.tsv",
     formatter(),
     # Output parameter: Glob matches any number of output file names
-    "results/test/job.*",
-    "results/test/job",
+    "results/test/*",
+    "results/test",
 )
 def subdivide_files(input_file, output_files, output_file_name_root):
     #   The number of output files is decided at run time
-    number_of_output_files = get_number_of_samples()
-    for ii in range(number_of_output_files):
-        output_file_name = "{output_file_name_root}.{ii}".format(**locals())
+    sample_ids = get_sample_identifiers()
+    for sample_id in sample_ids:
+        output_file_name = "{output_file_name_root}/{sample_id}".format(**locals())
         with open(output_file_name, "w"):
             pass
 
