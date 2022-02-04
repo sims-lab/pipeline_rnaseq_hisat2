@@ -1,3 +1,4 @@
+# pipeline
 results/
 *.log
 *.gtf.gz
@@ -5,3 +6,7 @@ results/
 *.fa
 *.fastq.gz
 *.pyc
+# cgatcore
+ctmp*.sh
+# Visual Studio Code
+.vscode/settings.json
