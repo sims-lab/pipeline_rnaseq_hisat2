@@ -1,1 +1,7 @@
 results/
+*.log
+*.gtf.gz
+*.ht2
+*.fa
+*.fastq.gz
+*.pyc
