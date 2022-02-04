@@ -12,8 +12,8 @@ def get_sample_identifiers():
     """
     Get the number of samples defined in samples.tsv.
     """
-    config_samples = pd.read_csv("config/samples.tsv", sep="\t")
-    ans = config_samples["sample_id"]
+    config_files = pd.read_csv("config/files.tsv", sep="\t")
+    ans = config_files["sample_id"].unique().tolist()
     return ans
 
 
