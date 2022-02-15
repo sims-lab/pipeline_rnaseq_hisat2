@@ -19,7 +19,7 @@ def concatenate_files_fastq(index):
     ans = config_files[index].groupby(
         config_files['sample_id']
     ).aggregate(
-        lambda x: " ".join(x)
+        lambda x: ",".join(x)
     ).to_dict()
     return(ans)
 
