@@ -126,7 +126,7 @@ def multiqc_fastq(infiles, outfile):
 
 @follows(mkdir("results/hisat2"))
 @subdivide(
-    "config/files.tsv",
+    "config/fastq_files.tsv",
     formatter(),
     # Output parameter: Glob matches any number of output file names
     "results/hisat2/*.bam",
@@ -134,7 +134,7 @@ def multiqc_fastq(infiles, outfile):
 )
 def hisat2_on_fastq(input_file, output_files, output_file_name_root):
     # the arguments 'input_file' and 'output_files' are not used here
-    # input and output files are generated from 'config/files.tsv'
+    # input and output files are generated from 'config/fastq_files.tsv'
 
     hisat2_threads = PARAMS["hisat2"]["threads"]
     hisat2_genome = PARAMS["hisat2"]["genome"]

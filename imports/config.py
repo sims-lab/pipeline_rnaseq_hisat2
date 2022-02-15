@@ -4,7 +4,7 @@ def get_sample_identifiers():
     """
     Get the identifiers of samples present in files.tsv.
     """
-    config_files = pd.read_csv("config/files.tsv", sep="\t")
+    config_files = pd.read_csv("config/fastq_files.tsv", sep="\t")
     ans = config_files["sample_id"].unique().tolist()
     return ans
 
@@ -15,7 +15,7 @@ def concatenate_files_fastq(index):
 
     Argument 'index' must be either 'fastq1' or 'fastq2'.
     '''
-    config_files = pd.read_csv("config/files.tsv", sep="\t")
+    config_files = pd.read_csv("config/fastq_files.tsv", sep="\t")
     ans = config_files[index].groupby(
         config_files['sample_id']
     ).aggregate(
