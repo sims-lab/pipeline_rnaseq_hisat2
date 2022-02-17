@@ -12,3 +12,8 @@ ctmp*.sh
 .vscode/settings.json
 # miscellaneous
 nohup.out
+sps-*.tar.gz
+sps-*-cpu.tsv
+sps-*-mem.tsv
+sps-*-read.tsv
+sps-*-write.tsv
