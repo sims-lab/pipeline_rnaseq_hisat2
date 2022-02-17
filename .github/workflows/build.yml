@@ -73,10 +73,10 @@ jobs:
             https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.6.ht2 \
             https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.7.ht2 \
             https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/hisat2_chr22.8.ht2 \
-            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.part_001.fastq \
-            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.part_001.fastq \
-            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_1.part_002.fastq \
-            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_2.part_002.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_part1_1.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_part1_2.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_part2_1.fastq \
+            https://github.com/sims-lab/simulated_ngs_datasets/raw/files/human.chr22.genes2/outputs/simulated_reads/sample_02_part2_2.fastq \
             -P data \
             --no-verbose
           ls data
@@ -87,10 +87,10 @@ jobs:
           gzip \
             data/sample_01_1.fastq \
             data/sample_01_2.fastq \
-            data/sample_02_1.part_001.fastq \
-            data/sample_02_2.part_001.fastq \
-            data/sample_02_1.part_002.fastq \
-            data/sample_02_2.part_002.fastq \
+            data/sample_02_part1_1.fastq \
+            data/sample_02_part1_2.fastq \
+            data/sample_02_part2_1.fastq \
+            data/sample_02_part2_2.fastq \
             data/chr22.genes2.gtf
           ls data
         shell: bash -l {0}
