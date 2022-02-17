@@ -66,6 +66,7 @@ import sys
 import os
 import cgatcore.experiment as E
 from cgatcore import pipeline as P
+from imports.config import build_commands_hisat2
 
 #################
 # Configuration #
@@ -124,41 +125,30 @@ def multiqc_fastq(infiles, outfile):
 
 
 @follows(mkdir("results/hisat2"))
-@collate("data/*.fastq.gz", regex(r".*/(.*)_[12].fastq.gz"), r"results/hisat2/\1.bam")
-def hisat2_on_fastq(infiles, outfile):
-    """
-    Run `hisat2` on the paired-end FASTQ files.
-    """
-
-    infile1, infile2 = infiles
+@subdivide(
+    "config/fastq_files.tsv",
+    formatter(),
+    # Output parameter: Glob matches any number of output file names
+    "results/hisat2/*.bam",
+    "results/hisat2",
+)
+def hisat2_on_fastq(input_file, output_files, output_file_name_root):
+    # the arguments 'input_file' and 'output_files' are not used here
+    # input and output files are generated from 'config/fastq_files.tsv'
 
     hisat2_threads = PARAMS["hisat2"]["threads"]
     hisat2_genome = PARAMS["hisat2"]["genome"]
     hisat2_options = PARAMS["hisat2"]["options"]
 
-    statement = (
-        """
-        hisat2
-            --threads %(hisat2_threads)s
-            -x %(hisat2_genome)s
-            -1 %(infile1)s
-            -2 %(infile2)s
-            %(hisat2_options)s
-            --summary-file %(outfile)s.log
-        | samtools sort
-            -@ %(hisat2_threads)s
-            -o %(outfile)s
-            -
-        && samtools index
-            %(outfile)s
-    """
-        % locals()
+    statements = build_commands_hisat2(
+        output_file_name_root, hisat2_threads, hisat2_genome, hisat2_options
     )
 
     P.run(
-        statement,
+        statements,
         job_condaenv="pipeline_rnaseq_hisat2",
         job_threads=PARAMS["hisat2_threads"],
+        job_memory=PARAMS["hisat2_memory_per_thread"]
     )
 
 

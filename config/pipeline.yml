@@ -2,6 +2,7 @@
 
 hisat2:
     threads: 2
+    memory_per_thread: 2G
     genome: data/hisat2_chr22
     options: --rna-strandness RF
 
