@@ -148,6 +148,7 @@ def hisat2_on_fastq(input_file, output_files, output_file_name_root):
         statements,
         job_condaenv="pipeline_rnaseq_hisat2",
         job_threads=PARAMS["hisat2_threads"],
+        job_memory=PARAMS["hisat2_memory_per_thread"]
     )
 
 

@@ -10,3 +10,5 @@ results/
 ctmp*.sh
 # Visual Studio Code
 .vscode/settings.json
+# miscellaneous
+nohup.out
